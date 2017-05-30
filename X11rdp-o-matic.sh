@@ -166,6 +166,7 @@ REQUIREDPACKAGES=(build-essential checkinstall automake git
 git-core libssl-dev libpam0g-dev zlib1g-dev libtool libx11-dev libxfixes-dev
 pkg-config flex bison libxml2-dev intltool xsltproc xutils-dev python-libxml2
 g++ xutils libfuse-dev wget libxrandr-dev libdrm-dev libpixman-1-dev
+nasm
 x11proto-xf86dri-dev
 x11proto-video-dev
 x11proto-resource-dev

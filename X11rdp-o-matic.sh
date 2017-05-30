@@ -676,9 +676,18 @@ welcome_message()
 # Worked out from the chosen branch.
 calculate_version_num()
 {
-  README="https://raw.github.com/neutrinolabs/xrdp/$XRDPBRANCH/readme.txt"
-  wget --no-check-certificate -O "$TMPFILE" "$README" >& /dev/null
-  VERSION=$(grep xrdp "$TMPFILE" | head -1 | cut -d " " -f2)
+  READMETXT="https://raw.github.com/neutrinolabs/xrdp/$XRDPBRANCH/readme.txt"
+  READMEMD="https://raw.github.com/neutrinolabs/xrdp/$XRDPBRANCH/README.md"
+  if wget --no-check-certificate -O "$TMPFILE" "$READMETXT" >& /dev/null
+  then
+    VERSION=$(grep xrdp "$TMPFILE" | head -1 | cut -d " " -f2)
+  elif wget --no-check-certificate -O "$TMPFILE" "$READMEMD" >& /dev/null
+  then
+    VERSION=$(grep 'Current Version' "$TMPFILE" | head -1 | sed -e 's/\*Current Version:\*\s*//')
+  else
+    echo "Stopped. Cannot determine version number."
+    exit -1
+  fi
   rm -f "$TMPFILE"
   if [ "${XRDPBRANCH#v}" = "$XRDPBRANCH" ]
   then
